@@ -4,7 +4,11 @@ const connectDB = require('./dbConnection')
 const Ticket = require('./schema');
 const cors = require("cors");
 
-app.use(cors());
+app.use(cors(
+    {
+        origin:'https://shoe-ease-frontend.vercel.app/'
+    }
+));
 //Middleware for parsing Json
 app.use(express.json());
 //Connecting to Database
