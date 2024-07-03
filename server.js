@@ -1,23 +1,36 @@
 const express = require("express");
 const app = express();
-const connectDB = require('./dbConnection')
-const Ticket = require('./schema');
+const connectDB = require('./dbConnection');
 const cors = require("cors");
 
+// Middleware for enabling CORS from a specific origin
 app.use(cors({
     origin: 'https://shoe-ease-frontend.vercel.app', // Note: No trailing slash
     methods: ['GET', 'POST', 'PUT', 'DELETE'], // Allowed methods
     allowedHeaders: ['Content-Type', 'Authorization'], // Allowed headers
     credentials: true // If you need to include cookies in the requests
 }));
-//Middleware for parsing Json
+
+// Middleware for parsing JSON
 app.use(express.json());
-//Connecting to Database
+
+// Middleware for parsing URL-encoded data
+app.use(express.urlencoded({ extended: false }));
+
+// Connect to the database
 connectDB();
-app.use(express.urlencoded({ extended: false }))
-// creating an api and seperating it.
+
+// Middleware for routing API requests
 app.use("/api", require("./routes"));
 
-app.listen(8080,()=>{
-    console.log("App listening to port 8080")
+// Error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
+// Start the server
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+    console.log(`App listening on port ${PORT}`);
 });
