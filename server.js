@@ -6,7 +6,7 @@ const cors = require("cors");
 
 app.use(cors(
     {
-        origin:'https://shoe-ease-frontend.vercel.app/'
+        origin:'https://shoe-ease-frontend.vercel.app'
     }
 ));
 //Middleware for parsing Json
