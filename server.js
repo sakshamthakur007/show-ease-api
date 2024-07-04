@@ -23,6 +23,10 @@ connectDB();
 // Middleware for routing API requests
 app.use("/api", require("./routes"));
 
+app.get('/', (req, res) => {
+  res.send('API is running');
+});
+
 // Error handling middleware
 app.use((err, req, res, next) => {
     console.error(err.stack);
